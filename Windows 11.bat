@@ -5,7 +5,7 @@ chcp 65001 >nul
 cls
 
 :: Define caminho e nome do arquivo
-set "outputDir=S:\2-VERIFICAR SISTEMA\RelatoriosTI"
+set "outputDir=S:\0-PROGRAMAS\RelatoriosTI"
 set "outputFile=%outputDir%\relatorio_%COMPUTERNAME%.txt"
 
 :: Coleta IP
@@ -38,14 +38,15 @@ echo Nome do Computador: %COMPUTERNAME%
 echo.
 echo IPv4: !IP!
 echo.
-echo Chave do Produto: !CHAVE!
+echo Chave Windows: !CHAVE!
 echo.
 echo Serial Number: !SERIAL!
 echo.
 echo Usuários Conectados:
 echo !USERS!
+echo.
 echo ===============================
-echo Nenhuma alteração foi feita!!
+echo Nenhuma alteracao foi feita !!
 echo          TI    
 echo ===============================
 echo.
@@ -71,19 +72,13 @@ if not exist "%outputDir%" mkdir "%outputDir%"
     echo.
     echo IPv4: !IP!
     echo.
-    echo Chave do Produto: !CHAVE!
+    echo Chave Windows: !CHAVE!
     echo.
     echo Serial da BIOS: !SERIAL!
     echo.
     echo Usuários Conectados:
     echo !USERS!
-    echo.
-    echo ===============================
-    echo Nenhuma alteração foi feita!!
-    echo          TI    
-    echo ===============================
-    echo.
-) > "%outputFile%"
+    ) > "%outputFile%"
 
 echo.
 echo Relatório salvo em: %outputFile%
