@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 cls
 
 :: Define caminho e nome do arquivo
-set "outputDir=S:\2-VERIFICAR SISTEMA\RelatoriosTI"
+set "outputDir=S:\0-PROGRAMAS\RelatoriosTI"
 set "outputFile=%outputDir%\relatoriow10_%COMPUTERNAME%.txt"
 
 :: Coleta IP
@@ -25,10 +25,11 @@ for /f "skip=1 delims=" %%S in ('wmic bios get serialnumber') do (
     if not defined SERIAL set "SERIAL=%%S"
 )
 
-:: Coleta informações da placa-mãe
-set "BASEBOARD="
-for /f "skip=1 delims=" %%B in ('wmic baseboard get product, Manufacturer, version, serialnumber') do (
-    if not defined BASEBOARD set "BASEBOARD=%%B"
+:: Coleta informações de usuários conectados
+set "USERS="
+for /f "skip=1 delims=" %%U in ('query user 2^>nul') do (
+    set "USERS=!USERS!%%U
+
 )
 
 :: Exibe na tela
@@ -37,11 +38,12 @@ echo Nome do Computador: %COMPUTERNAME%
 echo.
 echo IPv4: !IP!
 echo.
-echo Chave do Produto: !CHAVE!
+echo Chave Windows: !CHAVE!
 echo.
 echo Numero de Serie da BIOS: !SERIAL!
 echo.
-echo Informacoes da Placa-mae: !BASEBOARD!
+echo Usuarios Conectados:
+echo !USERS!
 echo.
 echo ===============================
 echo Nenhuma alteracao foi feita!!
@@ -55,7 +57,7 @@ choice /m "Deseja salvar o relatório em %outputDir%?"
 :: Se NÃO (N), encerra o script
 if errorlevel 2 (
     echo.
-    echo O relatório NÃO foi salvo.
+    echo O relatorio NAO foi salvo.
     echo.
     pause
     goto :EOF
@@ -70,16 +72,12 @@ if not exist "%outputDir%" mkdir "%outputDir%"
     echo.
     echo IPv4: !IP!
     echo.
-    echo Chave do Produto: !CHAVE!
+    echo Chave Windows: !CHAVE!
     echo.
-    echo Nmero de Serie da BIOS: !SERIAL!
+    echo Numero de Serie da BIOS: !SERIAL!
     echo.
-    echo Informacoes da Placa-mae: !BASEBOARD!
-    echo.
-    echo ===============================
-    echo Nenhuma alteracao foi feita!!
-    echo          TI    
-    echo ===============================
+    echo Usuarios Conectados:
+    echo !USERS!
     echo.
 ) > "%outputFile%"
 
